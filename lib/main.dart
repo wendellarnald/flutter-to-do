@@ -20,22 +20,43 @@ class App extends StatelessWidget {
 class HomePage extends StatefulWidget {
   var items = new List<Item>();
 
-  HomePage() {
-    items = [];
-    items.add(Item(title: "Item 1", done: false));
-    items.add(Item(title: "Item 2", done: true));
-  }
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  var newTaskCrtl = TextEditingController();
+
+  void addTask() {
+    if (newTaskCrtl.text.isEmpty) return;
+
+    setState(() {
+      widget.items.add(
+        Item(
+          title: newTaskCrtl.text,
+          done: false,
+        ),
+      );
+      newTaskCrtl.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter To Do"),
+        title: TextFormField(
+          controller: newTaskCrtl,
+          keyboardType: TextInputType.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+          decoration: InputDecoration(
+            labelText: "Nova Tarefa",
+            labelStyle: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: widget.items.length,
@@ -53,6 +74,11 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: addTask,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
       ),
     );
   }
