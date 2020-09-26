@@ -1,6 +1,6 @@
 # Flutter To-Do
 
-
+The objective of this project is to create a simple ToDo to know the flutter language.
 
 ## Author
 
